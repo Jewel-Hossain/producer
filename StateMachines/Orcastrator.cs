@@ -1,8 +1,10 @@
 //In the name of Allah
 
-public class AddCitySaga : ISaga,InitiatedBy<CityAdded>,Orchestrates<CityInsertionSucceeded>,Orchestrates<CityInsertionFailed>
+public class AddCitySaga : ISaga,ISagaVersion,InitiatedBy<CityAdded>,Orchestrates<CityInsertionSucceeded>,Orchestrates<CityInsertionFailed>
 {
     public Guid CorrelationId { get; set; }
+    public string? CurrentState { get; set; }
+    public int Version { get; set; }
 
     public async Task Consume(ConsumeContext<CityAdded> context)
     {
@@ -16,24 +18,10 @@ public class AddCitySaga : ISaga,InitiatedBy<CityAdded>,Orchestrates<CityInserti
         await endpoint.Send(message);
     }
 
-    // public async Task Consume<TEntity>(ConsumeContext<CityInsertionSucceeded> context) where TEntity : class ,IProcessable
-    // {
-    //     // Mark the city as processed here
-    //     var _dbContext = context.GetPayload<IServiceProvider>().GetService<InMemoryDbContext>();
-    //     if(_dbContext is null) return;
-    //     //var city = await _dbContext.Cities.IgnoreQueryFilters().FirstOrDefaultAsync(c => c.Id == context.Message.CityId);
-    //     var city = await _dbContext.Set<TEntity>().IgnoreQueryFilters().FirstOrDefaultAsync(e => EF.Property<Guid>(e, "Id") == context.Message.CityId);
-    //     if (city != null)
-    //     {
-    //         city.IsProcessed = true;
-    //         await _dbContext.SaveChangesAsync();
-    //     }
-    // }
-
     public async Task Consume(ConsumeContext<CityInsertionSucceeded> context) 
     {
         // Mark the city as processed here
-        var _dbContext = context.GetPayload<IServiceProvider>().GetService<InMemoryDbContext>();
+        var _dbContext = context.GetPayload<IServiceProvider>().GetService<ApplicationDbContext>();
         if(_dbContext is null) return;
         var city = await _dbContext.Cities.IgnoreQueryFilters().FirstOrDefaultAsync(c => c.Id == context.Message.CityId);
         if (city != null)
@@ -46,7 +34,7 @@ public class AddCitySaga : ISaga,InitiatedBy<CityAdded>,Orchestrates<CityInserti
     public async Task Consume(ConsumeContext<CityInsertionFailed> context)
     {
         // Compensate for the first database insertion here
-        var _dbContext = context.GetPayload<IServiceProvider>().GetService<InMemoryDbContext>();
+        var _dbContext = context.GetPayload<IServiceProvider>().GetService<ApplicationDbContext>();
         if(_dbContext is null) return;
         var city = await _dbContext.Cities.IgnoreQueryFilters().FirstOrDefaultAsync(c => c.Id == context.Message.CityId);
         if (city != null)
@@ -57,7 +45,4 @@ public class AddCitySaga : ISaga,InitiatedBy<CityAdded>,Orchestrates<CityInserti
     }
 }//class
 
-public interface IProcessable
-{
-    bool IsProcessed { get; set; }
-}
+

@@ -1,3 +1,6 @@
 {
-    "dotnet.defaultSolution": "producer.sln"
+    "dotnet.defaultSolution": "producer.sln",
+    "cSpell.words": [
+        "Npgsql"
+    ]
 }

@@ -1,12 +1,13 @@
 //In the name of Allah
 
-namespace SAGA.Data;
-public class InMemoryDbContext : DbContext
-{
-    public InMemoryDbContext(DbContextOptions<InMemoryDbContext> options) : base(options){}
 
-    public DbSet<Product> Products { get; set; }
+namespace SAGA.Data;
+public class ApplicationDbContext : DbContext
+{
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
+
     public DbSet<City> Cities { get; set; }
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -14,5 +15,5 @@ public class InMemoryDbContext : DbContext
 
         modelBuilder.Entity<City>().HasQueryFilter(c => c.IsProcessed);
     }//func
-    
+
 }//class

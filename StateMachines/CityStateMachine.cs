@@ -1,52 +1,79 @@
-// public class CitySagaState : SagaStateMachineInstance
-// {
-//     public Guid CorrelationId { get; set; }
-//     public bool IsDatabase1Processed { get; set; }
-//     public bool IsDatabase2Processed { get; set; }
-//     public string? CurrentState { get; set; }
-// }
-
 // public class CitySaga : MassTransitStateMachine<CitySagaState>
 // {
 //     public CitySaga()
 //     {
 //         InstanceState(x => x.CurrentState);
 
-//         Event(() => CityInserted1, x => x.CorrelateById(context => context.Message.CityId));
-//         Event(() => CityInserted2, x => x.CorrelateById(context => context.Message.CityId));
+//         Event(() => CityAdded, x => x.CorrelateById(context => context.Message.CityId));
+//         Event(() => CityProcessed, x => x.CorrelateById(context => context.Message.CityId));
 
 //         Initially(
-//             When(CityInserted1)
+//             When(CityAdded)
 //                 .Then(context =>
 //                 {
-//                     // Handle database 1 insertion
-//                     context.Instance.IsDatabase1Processed = true;
+//                     context.Saga.CityId = context.Saga.CityId;
+//                     context.Saga.Name = context.Saga.Name;
 //                 })
-//                 .TransitionTo(ProcessingDatabase2)
-//         );
+//                 .SendAsync(new Uri("queue:service-b-queue"), context => context.Init<AddCity>(new
+//                 {
+//                     CityId = context.Saga.CorrelationId,
+//                     Name = context.Saga.Name
+//                 }))
+//                 .TransitionTo(AddingCity));
 
-//         During(ProcessingDatabase2,
-//             When(CityInserted2)
+//         During(AddingCity,
+//             When(CityProcessed)
 //                 .Then(context =>
 //                 {
-//                     // Handle database 2 insertion
-//                     context.Instance.IsDatabase2Processed = true;
+//                     if (context.Message.Success)
+//                     {
+//                         // Mark city as processed in ServiceA's database
+//                         // ...
+//                     }
+//                     else
+//                     {
+//                         // Compensate by removing city from ServiceA's database
+//                         // ...
+//                     }
 //                 })
-//                 .Finalize()
-//         );
+//                 .Finalize());
 
 //         SetCompletedWhenFinalized();
 //     }
 
-//     public State ProcessingDatabase2 { get; private set; }
+//     public State AddingCity { get; private set; }
 
-//     public Event<CityInserted> CityInserted1 { get; private set; }
-//     public Event<CityInserted> CityInserted2 { get; private set; }
+//     public Event<CityAdded> CityAdded { get; private set; }
+//     public Event<CityProcessed> CityProcessed { get; private set; }
+
+    
 // }
 
-// public interface CityInserted
+
+// public class CitySagaState : SagaStateMachineInstance,ISagaVersion
 // {
-//     Guid CityId { get; }
+//     public Guid CorrelationId { get; set; }
+//     public string CurrentState { get; set; }
+
+//     public Guid CityId { get; set; }
+//     public string Name { get; set; }
+//     public int Version { get; set; }
 // }
 
- 
+// public class CityAdded
+// {
+//     public Guid CityId { get; set; }
+//     public string Name { get; set; }
+// }
+
+// public class CityProcessed
+// {
+//     public Guid CityId { get; set; }
+//     public bool Success { get; set; }
+// }
+
+// public class AddCity
+// {
+//     public Guid CityId { get; set; }
+//     public string Name { get; set; }
+// }

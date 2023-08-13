@@ -9,13 +9,25 @@
       "producer/1.0.0": {
         "dependencies": {
           "MassTransit.RabbitMQ": "8.0.16",
+          "MassTransit.Redis": "8.0.16",
           "Microsoft.AspNetCore.OpenApi": "7.0.10",
           "Microsoft.EntityFrameworkCore": "7.0.10",
+          "Microsoft.EntityFrameworkCore.Design": "7.0.10",
           "Microsoft.EntityFrameworkCore.InMemory": "7.0.10",
+          "StackExchange.Redis.Extensions.Core": "9.1.0",
+          "StackExchange.Redis.Extensions.Newtonsoft": "9.1.0",
           "Swashbuckle.AspNetCore": "6.5.0"
         },
         "runtime": {
           "producer.dll": {}
+        }
+      },
+      "Humanizer.Core/2.14.1": {
+        "runtime": {
+          "lib/net6.0/Humanizer.dll": {
+            "assemblyVersion": "2.14.0.0",
+            "fileVersion": "2.14.1.48190"
+          }
         }
       },
       "MassTransit/8.0.16": {
@@ -29,7 +41,7 @@
           "System.Diagnostics.DiagnosticSource": "6.0.0",
           "System.Reflection.Emit": "4.7.0",
           "System.Reflection.Emit.Lightweight": "4.7.0",
-          "System.Text.Json": "6.0.7",
+          "System.Text.Json": "7.0.0",
           "System.Threading.Channels": "7.0.0"
         },
         "runtime": {
@@ -54,6 +66,18 @@
         },
         "runtime": {
           "lib/net6.0/MassTransit.RabbitMqTransport.dll": {
+            "assemblyVersion": "8.0.16.0",
+            "fileVersion": "8.0.16.0"
+          }
+        }
+      },
+      "MassTransit.Redis/8.0.16": {
+        "dependencies": {
+          "MassTransit": "8.0.16",
+          "StackExchange.Redis": "2.6.104"
+        },
+        "runtime": {
+          "lib/net6.0/MassTransit.RedisIntegration.dll": {
             "assemblyVersion": "8.0.16.0",
             "fileVersion": "8.0.16.0"
           }
@@ -94,12 +118,38 @@
         }
       },
       "Microsoft.EntityFrameworkCore.Analyzers/7.0.10": {},
+      "Microsoft.EntityFrameworkCore.Design/7.0.10": {
+        "dependencies": {
+          "Humanizer.Core": "2.14.1",
+          "Microsoft.EntityFrameworkCore.Relational": "7.0.10",
+          "Microsoft.Extensions.DependencyModel": "7.0.0",
+          "Mono.TextTemplating": "2.2.1"
+        },
+        "runtime": {
+          "lib/net6.0/Microsoft.EntityFrameworkCore.Design.dll": {
+            "assemblyVersion": "7.0.10.0",
+            "fileVersion": "7.0.1023.36204"
+          }
+        }
+      },
       "Microsoft.EntityFrameworkCore.InMemory/7.0.10": {
         "dependencies": {
           "Microsoft.EntityFrameworkCore": "7.0.10"
         },
         "runtime": {
           "lib/net6.0/Microsoft.EntityFrameworkCore.InMemory.dll": {
+            "assemblyVersion": "7.0.10.0",
+            "fileVersion": "7.0.1023.36204"
+          }
+        }
+      },
+      "Microsoft.EntityFrameworkCore.Relational/7.0.10": {
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore": "7.0.10",
+          "Microsoft.Extensions.Configuration.Abstractions": "7.0.0"
+        },
+        "runtime": {
+          "lib/net6.0/Microsoft.EntityFrameworkCore.Relational.dll": {
             "assemblyVersion": "7.0.10.0",
             "fileVersion": "7.0.1023.36204"
           }
@@ -120,7 +170,7 @@
           "Microsoft.Extensions.Primitives": "7.0.0"
         }
       },
-      "Microsoft.Extensions.Configuration.Abstractions/6.0.0": {
+      "Microsoft.Extensions.Configuration.Abstractions/7.0.0": {
         "dependencies": {
           "Microsoft.Extensions.Primitives": "7.0.0"
         }
@@ -131,6 +181,18 @@
         }
       },
       "Microsoft.Extensions.DependencyInjection.Abstractions/7.0.0": {},
+      "Microsoft.Extensions.DependencyModel/7.0.0": {
+        "dependencies": {
+          "System.Text.Encodings.Web": "7.0.0",
+          "System.Text.Json": "7.0.0"
+        },
+        "runtime": {
+          "lib/net7.0/Microsoft.Extensions.DependencyModel.dll": {
+            "assemblyVersion": "7.0.0.0",
+            "fileVersion": "7.0.22.51805"
+          }
+        }
+      },
       "Microsoft.Extensions.Diagnostics.HealthChecks/6.0.1": {
         "dependencies": {
           "Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions": "6.0.1",
@@ -147,7 +209,7 @@
       },
       "Microsoft.Extensions.Hosting.Abstractions/6.0.0": {
         "dependencies": {
-          "Microsoft.Extensions.Configuration.Abstractions": "6.0.0",
+          "Microsoft.Extensions.Configuration.Abstractions": "7.0.0",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "7.0.0",
           "Microsoft.Extensions.FileProviders.Abstractions": "6.0.0"
         }
@@ -176,6 +238,36 @@
           }
         }
       },
+      "Mono.TextTemplating/2.2.1": {
+        "dependencies": {
+          "System.CodeDom": "4.4.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Mono.TextTemplating.dll": {
+            "assemblyVersion": "2.2.0.0",
+            "fileVersion": "2.2.1.1"
+          }
+        }
+      },
+      "Newtonsoft.Json/13.0.2": {
+        "runtime": {
+          "lib/net6.0/Newtonsoft.Json.dll": {
+            "assemblyVersion": "13.0.0.0",
+            "fileVersion": "13.0.2.27524"
+          }
+        }
+      },
+      "Pipelines.Sockets.Unofficial/2.2.2": {
+        "dependencies": {
+          "System.IO.Pipelines": "5.0.1"
+        },
+        "runtime": {
+          "lib/net5.0/Pipelines.Sockets.Unofficial.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "2.2.2.34088"
+          }
+        }
+      },
       "RabbitMQ.Client/6.5.0": {
         "dependencies": {
           "System.Memory": "4.5.5",
@@ -185,6 +277,41 @@
           "lib/netstandard2.0/RabbitMQ.Client.dll": {
             "assemblyVersion": "6.0.0.0",
             "fileVersion": "6.5.0.0"
+          }
+        }
+      },
+      "StackExchange.Redis/2.6.104": {
+        "dependencies": {
+          "Pipelines.Sockets.Unofficial": "2.2.2"
+        },
+        "runtime": {
+          "lib/net5.0/StackExchange.Redis.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.6.104.40210"
+          }
+        }
+      },
+      "StackExchange.Redis.Extensions.Core/9.1.0": {
+        "dependencies": {
+          "Microsoft.Extensions.Logging.Abstractions": "7.0.0",
+          "StackExchange.Redis": "2.6.104"
+        },
+        "runtime": {
+          "lib/net7.0/StackExchange.Redis.Extensions.Core.dll": {
+            "assemblyVersion": "9.1.0.0",
+            "fileVersion": "9.1.0.0"
+          }
+        }
+      },
+      "StackExchange.Redis.Extensions.Newtonsoft/9.1.0": {
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.2",
+          "StackExchange.Redis.Extensions.Core": "9.1.0"
+        },
+        "runtime": {
+          "lib/net7.0/StackExchange.Redis.Extensions.Newtonsoft.dll": {
+            "assemblyVersion": "9.1.0.0",
+            "fileVersion": "9.1.0.0"
           }
         }
       },
@@ -226,24 +353,28 @@
           }
         }
       },
+      "System.CodeDom/4.4.0": {
+        "runtime": {
+          "lib/netstandard2.0/System.CodeDom.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "4.6.25519.3"
+          }
+        }
+      },
       "System.Diagnostics.DiagnosticSource/6.0.0": {
         "dependencies": {
           "System.Runtime.CompilerServices.Unsafe": "6.0.0"
         }
       },
+      "System.IO.Pipelines/5.0.1": {},
       "System.Memory/4.5.5": {},
       "System.Reflection.Emit/4.7.0": {},
       "System.Reflection.Emit.Lightweight/4.7.0": {},
       "System.Runtime.CompilerServices.Unsafe/6.0.0": {},
-      "System.Text.Encodings.Web/6.0.0": {
+      "System.Text.Encodings.Web/7.0.0": {},
+      "System.Text.Json/7.0.0": {
         "dependencies": {
-          "System.Runtime.CompilerServices.Unsafe": "6.0.0"
-        }
-      },
-      "System.Text.Json/6.0.7": {
-        "dependencies": {
-          "System.Runtime.CompilerServices.Unsafe": "6.0.0",
-          "System.Text.Encodings.Web": "6.0.0"
+          "System.Text.Encodings.Web": "7.0.0"
         }
       },
       "System.Threading.Channels/7.0.0": {}
@@ -254,6 +385,13 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "Humanizer.Core/2.14.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-lQKvtaTDOXnoVJ20ibTuSIOf2i0uO0MPbDhd1jm238I+U/2ZnRENj0cktKZhtchBMtCUSRQ5v4xBCUbKNmyVMw==",
+      "path": "humanizer.core/2.14.1",
+      "hashPath": "humanizer.core.2.14.1.nupkg.sha512"
     },
     "MassTransit/8.0.16": {
       "type": "package",
@@ -275,6 +413,13 @@
       "sha512": "sha512-M97xmeV1MxCDV4RboVNbePqAZj+Haic+L4KAa8qJzkLIh0bqpCv+3Hb2X+snhGm03jS1Xknh+wzHR+upvIXf8w==",
       "path": "masstransit.rabbitmq/8.0.16",
       "hashPath": "masstransit.rabbitmq.8.0.16.nupkg.sha512"
+    },
+    "MassTransit.Redis/8.0.16": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-XCo4heynyIzWV1TmcAulf8/rKvI09D8zi8sRH1N8xDVGAn0Aw4ZM8+a30iR1mSiaXEwu3mXNAufW1s8zp3kEdw==",
+      "path": "masstransit.redis/8.0.16",
+      "hashPath": "masstransit.redis.8.0.16.nupkg.sha512"
     },
     "Microsoft.AspNetCore.OpenApi/7.0.10": {
       "type": "package",
@@ -304,12 +449,26 @@
       "path": "microsoft.entityframeworkcore.analyzers/7.0.10",
       "hashPath": "microsoft.entityframeworkcore.analyzers.7.0.10.nupkg.sha512"
     },
+    "Microsoft.EntityFrameworkCore.Design/7.0.10": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ZDdJ2aAE529A1zd3sEvszADRCiJmlOKxc0WlhS+NIhSs68NESAApPZL4uHXrIk0vb7SBRnNPYPfOhASWf9dahg==",
+      "path": "microsoft.entityframeworkcore.design/7.0.10",
+      "hashPath": "microsoft.entityframeworkcore.design.7.0.10.nupkg.sha512"
+    },
     "Microsoft.EntityFrameworkCore.InMemory/7.0.10": {
       "type": "package",
       "serviceable": true,
       "sha512": "sha512-WeUjWx80ZVQVXkHuEIO4kOCKUHo6C4RdB1bJZLSngLWqwrQrMTCZE90IGBz0330GXmXKbL4LyJO/rXO/w7cRNA==",
       "path": "microsoft.entityframeworkcore.inmemory/7.0.10",
       "hashPath": "microsoft.entityframeworkcore.inmemory.7.0.10.nupkg.sha512"
+    },
+    "Microsoft.EntityFrameworkCore.Relational/7.0.10": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-PO2QB2Du+pW210UHmepYR12bk+ZOZJCiNkA7zEAxWs+vzvrRAMsUPlDlfgX2LXE7NBsnb0uvZp7a1/qqKf3fRQ==",
+      "path": "microsoft.entityframeworkcore.relational/7.0.10",
+      "hashPath": "microsoft.entityframeworkcore.relational.7.0.10.nupkg.sha512"
     },
     "Microsoft.Extensions.ApiDescription.Server/6.0.5": {
       "type": "package",
@@ -332,12 +491,12 @@
       "path": "microsoft.extensions.caching.memory/7.0.0",
       "hashPath": "microsoft.extensions.caching.memory.7.0.0.nupkg.sha512"
     },
-    "Microsoft.Extensions.Configuration.Abstractions/6.0.0": {
+    "Microsoft.Extensions.Configuration.Abstractions/7.0.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-qWzV9o+ZRWq+pGm+1dF+R7qTgTYoXvbyowRoBxQJGfqTpqDun2eteerjRQhq5PQ/14S+lqto3Ft4gYaRyl4rdQ==",
-      "path": "microsoft.extensions.configuration.abstractions/6.0.0",
-      "hashPath": "microsoft.extensions.configuration.abstractions.6.0.0.nupkg.sha512"
+      "sha512": "sha512-f34u2eaqIjNO9YLHBz8rozVZ+TcFiFs0F3r7nUJd7FRkVSxk8u4OpoK226mi49MwexHOR2ibP9MFvRUaLilcQQ==",
+      "path": "microsoft.extensions.configuration.abstractions/7.0.0",
+      "hashPath": "microsoft.extensions.configuration.abstractions.7.0.0.nupkg.sha512"
     },
     "Microsoft.Extensions.DependencyInjection/7.0.0": {
       "type": "package",
@@ -352,6 +511,13 @@
       "sha512": "sha512-h3j/QfmFN4S0w4C2A6X7arXij/M/OVw3uQHSOFxnND4DyAzO1F9eMX7Eti7lU/OkSthEE0WzRsfT/Dmx86jzCw==",
       "path": "microsoft.extensions.dependencyinjection.abstractions/7.0.0",
       "hashPath": "microsoft.extensions.dependencyinjection.abstractions.7.0.0.nupkg.sha512"
+    },
+    "Microsoft.Extensions.DependencyModel/7.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-oONNYd71J3LzkWc4fUHl3SvMfiQMYUCo/mDHDEu76hYYxdhdrPYv6fvGv9nnKVyhE9P0h20AU8RZB5OOWQcAXg==",
+      "path": "microsoft.extensions.dependencymodel/7.0.0",
+      "hashPath": "microsoft.extensions.dependencymodel.7.0.0.nupkg.sha512"
     },
     "Microsoft.Extensions.Diagnostics.HealthChecks/6.0.1": {
       "type": "package",
@@ -416,12 +582,54 @@
       "path": "microsoft.openapi/1.4.3",
       "hashPath": "microsoft.openapi.1.4.3.nupkg.sha512"
     },
+    "Mono.TextTemplating/2.2.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-KZYeKBET/2Z0gY1WlTAK7+RHTl7GSbtvTLDXEZZojUdAPqpQNDL6tHv7VUpqfX5VEOh+uRGKaZXkuD253nEOBQ==",
+      "path": "mono.texttemplating/2.2.1",
+      "hashPath": "mono.texttemplating.2.2.1.nupkg.sha512"
+    },
+    "Newtonsoft.Json/13.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-R2pZ3B0UjeyHShm9vG+Tu0EBb2lC8b0dFzV9gVn50ofHXh9Smjk6kTn7A/FdAsC8B5cKib1OnGYOXxRBz5XQDg==",
+      "path": "newtonsoft.json/13.0.2",
+      "hashPath": "newtonsoft.json.13.0.2.nupkg.sha512"
+    },
+    "Pipelines.Sockets.Unofficial/2.2.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Bhk0FWxH1paI+18zr1g5cTL+ebeuDcBCR+rRFO+fKEhretgjs7MF2Mc1P64FGLecWp4zKCUOPzngBNrqVyY7Zg==",
+      "path": "pipelines.sockets.unofficial/2.2.2",
+      "hashPath": "pipelines.sockets.unofficial.2.2.2.nupkg.sha512"
+    },
     "RabbitMQ.Client/6.5.0": {
       "type": "package",
       "serviceable": true,
       "sha512": "sha512-9hY5HiWPtCla1/l0WmXmLnqoX7iKE3neBQUWnetIJrRpOvTbO//XQfQDh++xgHCshL40Kv/6bR0HDkmJz46twg==",
       "path": "rabbitmq.client/6.5.0",
       "hashPath": "rabbitmq.client.6.5.0.nupkg.sha512"
+    },
+    "StackExchange.Redis/2.6.104": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ccfmWZifNOk2c+co6urH9BeyUzmbqalyksVy6Ma28xNTLT3Nrng+5OX+EB5KrTsWHykoZTGzTM3L7ndySuxEuA==",
+      "path": "stackexchange.redis/2.6.104",
+      "hashPath": "stackexchange.redis.2.6.104.nupkg.sha512"
+    },
+    "StackExchange.Redis.Extensions.Core/9.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-oj9Y3YfIa9bBGMcQIEvucPpwlqrZzPquDbZZQbJif7Bt7mTBkjovJ8fMd6DRbqDFaXWSA63T1Iei+z78gvERyg==",
+      "path": "stackexchange.redis.extensions.core/9.1.0",
+      "hashPath": "stackexchange.redis.extensions.core.9.1.0.nupkg.sha512"
+    },
+    "StackExchange.Redis.Extensions.Newtonsoft/9.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-mdS91/JT72TsGHSIXK+IZSdadv/SLt5gGC+sheMU3s0x6+urqvx8n3tUBA5Qh1WJ0CRJxl4V5rlThukExdLe8w==",
+      "path": "stackexchange.redis.extensions.newtonsoft/9.1.0",
+      "hashPath": "stackexchange.redis.extensions.newtonsoft.9.1.0.nupkg.sha512"
     },
     "Swashbuckle.AspNetCore/6.5.0": {
       "type": "package",
@@ -451,12 +659,26 @@
       "path": "swashbuckle.aspnetcore.swaggerui/6.5.0",
       "hashPath": "swashbuckle.aspnetcore.swaggerui.6.5.0.nupkg.sha512"
     },
+    "System.CodeDom/4.4.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-2sCCb7doXEwtYAbqzbF/8UAeDRMNmPaQbU2q50Psg1J9KzumyVVCgKQY8s53WIPTufNT0DpSe9QRvVjOzfDWBA==",
+      "path": "system.codedom/4.4.0",
+      "hashPath": "system.codedom.4.4.0.nupkg.sha512"
+    },
     "System.Diagnostics.DiagnosticSource/6.0.0": {
       "type": "package",
       "serviceable": true,
       "sha512": "sha512-frQDfv0rl209cKm1lnwTgFPzNigy2EKk1BS3uAvHvlBVKe5cymGyHO+Sj+NLv5VF/AhHsqPIUUwya5oV4CHMUw==",
       "path": "system.diagnostics.diagnosticsource/6.0.0",
       "hashPath": "system.diagnostics.diagnosticsource.6.0.0.nupkg.sha512"
+    },
+    "System.IO.Pipelines/5.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-qEePWsaq9LoEEIqhbGe6D5J8c9IqQOUuTzzV6wn1POlfdLkJliZY3OlB0j0f17uMWlqZYjH7txj+2YbyrIA8Yg==",
+      "path": "system.io.pipelines/5.0.1",
+      "hashPath": "system.io.pipelines.5.0.1.nupkg.sha512"
     },
     "System.Memory/4.5.5": {
       "type": "package",
@@ -486,19 +708,19 @@
       "path": "system.runtime.compilerservices.unsafe/6.0.0",
       "hashPath": "system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512"
     },
-    "System.Text.Encodings.Web/6.0.0": {
+    "System.Text.Encodings.Web/7.0.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-Vg8eB5Tawm1IFqj4TVK1czJX89rhFxJo9ELqc/Eiq0eXy13RK00eubyU6TJE6y+GQXjyV5gSfiewDUZjQgSE0w==",
-      "path": "system.text.encodings.web/6.0.0",
-      "hashPath": "system.text.encodings.web.6.0.0.nupkg.sha512"
+      "sha512": "sha512-OP6umVGxc0Z0MvZQBVigj4/U31Pw72ITihDWP9WiWDm+q5aoe0GaJivsfYGq53o6dxH7DcXWiCTl7+0o2CGdmg==",
+      "path": "system.text.encodings.web/7.0.0",
+      "hashPath": "system.text.encodings.web.7.0.0.nupkg.sha512"
     },
-    "System.Text.Json/6.0.7": {
+    "System.Text.Json/7.0.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-/Tf/9XjprpHolbcDOrxsKVYy/mUG/FS7aGd9YUgBVEiHeQH4kAE0T1sMbde7q6B5xcrNUsJ5iW7D1RvHudQNqA==",
-      "path": "system.text.json/6.0.7",
-      "hashPath": "system.text.json.6.0.7.nupkg.sha512"
+      "sha512": "sha512-DaGSsVqKsn/ia6RG8frjwmJonfos0srquhw09TlT8KRw5I43E+4gs+/bZj4K0vShJ5H9imCuXupb4RmS+dBy3w==",
+      "path": "system.text.json/7.0.0",
+      "hashPath": "system.text.json.7.0.0.nupkg.sha512"
     },
     "System.Threading.Channels/7.0.0": {
       "type": "package",

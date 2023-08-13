@@ -5,10 +5,10 @@ namespace SAGA.Controllers;
 [Route("[controller]")]
 public class CityController : ControllerBase
 {
-    private readonly InMemoryDbContext _dbContext;
+    private readonly ApplicationDbContext _dbContext;
     private readonly IPublishEndpoint _publishEndpoint;
 
-    public CityController(InMemoryDbContext dbContext, IPublishEndpoint publishEndpoint)
+    public CityController(ApplicationDbContext dbContext, IPublishEndpoint publishEndpoint)
     {
         _dbContext = dbContext;
         _publishEndpoint = publishEndpoint;
@@ -45,14 +45,22 @@ public class CityController : ControllerBase
         city.Id = Guid.NewGuid();
         city.IsProcessed = false;
 
-        _dbContext.Add(city);
+        _dbContext.Cities.Add(city);
         await _dbContext.SaveChangesAsync();
 
-        await _publishEndpoint.Publish(new CityAdded
+        var message = new CityAdded
         {
-            CorrelationId = city.Id,
+            CorrelationId = Guid.NewGuid(),
             City = city
-        });
+        };
+
+        // var message = new CityAdded
+        // {
+        //     CityId = city.Id,
+        //         Name = city.Name
+        // };
+
+        await _publishEndpoint.Publish(message);
 
         return Ok(city);
     }
