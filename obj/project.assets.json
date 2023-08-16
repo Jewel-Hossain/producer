@@ -2269,11 +2269,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\xEm\\Desktop\\SAGA\\producer\\producer.csproj",
+      "projectUniqueName": "c:\\Users\\xEm\\Desktop\\SAGA\\producer\\producer.csproj",
       "projectName": "producer",
-      "projectPath": "C:\\Users\\xEm\\Desktop\\SAGA\\producer\\producer.csproj",
+      "projectPath": "c:\\Users\\xEm\\Desktop\\SAGA\\producer\\producer.csproj",
       "packagesPath": "C:\\Users\\xEm\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\xEm\\Desktop\\SAGA\\producer\\obj\\",
+      "outputPath": "c:\\Users\\xEm\\Desktop\\SAGA\\producer\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\xEm\\AppData\\Roaming\\NuGet\\NuGet.Config"

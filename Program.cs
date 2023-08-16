@@ -5,7 +5,7 @@ global using Microsoft.EntityFrameworkCore;
 global using Microsoft.AspNetCore.Mvc;
 global using SAGA.Models;
 global using SAGA.Data;
-
+using SAGA.Utils;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,64 +21,32 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseInMemo
 
 builder.Services.AddMassTransit(x =>
 {
-    const string configurationString = "3.1.78.110:6379,password=foobared";
-    x.AddSaga<AddCitySaga>()
-        .RedisRepository(r => {
-            r.DatabaseConfiguration(configurationString);
+    x.SetKebabCaseEndpointNameFormatter();
 
-            // Default is Optimistic
-            r.ConcurrencyMode = ConcurrencyMode.Pessimistic;
+    Action<IRedisSagaRepositoryConfigurator> redisSagaConfigurator = configurator =>
+        {
+            const string configurationString = "3.1.78.110:6379,password=foobared";
+            configurator.DatabaseConfiguration(configurationString);
+            configurator.ConcurrencyMode = ConcurrencyMode.Pessimistic;// Default is Optimistic
+            configurator.KeyPrefix = "dev";// Optional, prefix each saga instance key with the string specified, resulting dev:c6cfd285-80b2-4c12-bcd3-56a00d994736 
+            configurator.LockSuffix = "-lockage";// Optional, to customize the lock key
+            configurator.LockTimeout = TimeSpan.FromSeconds(90);// Optional, the default is 30 seconds
+        };
 
-            // Optional, prefix each saga instance key with the string specified
-            // resulting dev:c6cfd285-80b2-4c12-bcd3-56a00d994736
-            r.KeyPrefix = "dev";
-
-            // Optional, to customize the lock key
-            r.LockSuffix = "-lockage";
-
-            // Optional, the default is 30 seconds
-            r.LockTimeout = TimeSpan.FromSeconds(90);
-        });
-
-
+    //city
+    x.AddSagaStateMachine<AddCityStateMachine, AddCitySaga>().RedisRepository(redisSagaConfigurator);
+    x.AddSagaStateMachine<UpdateCityStateMachine,UpdateCitySaga>().RedisRepository(redisSagaConfigurator);
+    x.AddSagaStateMachine<DeleteCityStateMachine,DeleteCitySaga>().RedisRepository(redisSagaConfigurator);
+    x.AddSagaStateMachine<AddCuisineStateMachine,AddCuisineSaga>().RedisRepository(redisSagaConfigurator);
+    
     x.UsingRabbitMq((context, config) =>
     {
         var connection = new Uri("amqp://admin:admin2023@18.138.164.11:5672");
         config.Host(connection);
-
-        config.ReceiveEndpoint("service-a-queue", e =>
-        {
-            e.ConfigureSaga<AddCitySaga>(context);
-        });
+        config.ConfigureEndpoints(context);
     });
 });
-// builder.Services.AddMassTransit(x =>
-// {
-//     // Configure Redis saga repository
-//     const string configurationString = "3.1.78.110:6379,password=foobared";
-//     x.AddSagaStateMachine<CitySaga, CitySagaState>()
-//         .RedisRepository(r =>
-//         {
-//             r.DatabaseConfiguration(configurationString);
-//             r.ConcurrencyMode = ConcurrencyMode.Pessimistic;
-//             r.KeyPrefix = "dev";
-//             r.LockSuffix = "-lockage";
-//             r.LockTimeout = TimeSpan.FromSeconds(90);
-//         });
 
-//     // Configure RabbitMQ transport
-//     x.UsingRabbitMq((context, config) =>
-//     {
-//         var connection = new Uri("amqp://admin:admin2023@18.138.164.11:5672");
-//         config.Host(connection);
-
-//         // Configure receive endpoint
-//         config.ReceiveEndpoint("service-a-queue", e =>
-//         {
-//             e.ConfigureSaga<CitySaga>(context);
-//         });
-//     });
-// });
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -96,3 +64,17 @@ app.MapControllers();
 
 
 app.Run();
+
+
+//city
+//config.ReceiveEndpoint(QueueEndpoints.CITY_ADD_PRODUCER, e => e.ConfigureSaga<AddCitySaga>(context));
+//config.ReceiveEndpoint(QueueEndpoints.CITY_UPDATE__PRODUCER, e => e.ConfigureSaga<UpdateCitySaga>(context));
+
+//cuisine
+//config.ReceiveEndpoint(QueueEndpoints.CUISINE_ADD_PRODUCER, e => e.ConfigureSaga<AddCuisineSaga>(context));
+
+// x.AddSaga<AddCitySaga>().RedisRepository(redisSagaConfigurator);
+// x.AddSaga<UpdateCitySaga>().RedisRepository(redisSagaConfigurator);
+
+// //cuisine
+// x.AddSaga<AddCuisineSaga>().RedisRepository(redisSagaConfigurator);

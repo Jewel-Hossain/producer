@@ -1,4 +1,5 @@
 //In the name of Allah
+
 namespace SAGA.Controllers;
 
 [ApiController]
@@ -53,16 +54,81 @@ public class CityController : ControllerBase
             CorrelationId = Guid.NewGuid(),
             City = city
         };
-
-        // var message = new CityAdded
-        // {
-        //     CityId = city.Id,
-        //         Name = city.Name
-        // };
-
         await _publishEndpoint.Publish(message);
 
         return Ok(city);
-    }
-}
+    }//func
+
+    [HttpPut]
+    public async Task<IActionResult> Put([FromQuery] Guid id, [FromBody] City city)
+    {
+        // Find the existing city in the database
+        var existingCity = await _dbContext.Cities.FindAsync(id);
+        if (existingCity == null)
+        {
+            return NotFound();
+        }
+
+        // Update the existing city with the new values
+        existingCity.Name = city.Name;
+        existingCity.CreatedAt = city.CreatedAt;
+        existingCity.IsProcessed = true;
+
+        // Save the changes to the database
+        _dbContext.Cities.Update(existingCity);
+        await _dbContext.SaveChangesAsync();
+
+        // Create a new CityUpdated message
+        var message = new CityUpdated
+        {
+            CorrelationId = Guid.NewGuid(),
+            City = existingCity
+        };
+
+        // Publish the message
+        await _publishEndpoint.Publish(message);
+
+        // Return the updated city
+        return Ok(existingCity);
+    }//func
+
+    [HttpDelete]
+    public async Task<IActionResult> Delete([FromQuery] Guid id, [FromQuery] bool IsActive)
+    {
+        // Find the existing city in the database
+        var existingCity = await _dbContext.Cities.FindAsync(id);
+        if (existingCity == null)
+        {
+            return NotFound();
+        }
+
+        // Update the existing city with the new values
+        existingCity.IsActive = IsActive;
+
+        var cityDelete = new CityDelete
+        {
+            Id = existingCity.Id,
+            IsActive = existingCity.IsActive
+        };
+
+
+        // Save the changes to the database
+        _dbContext.Cities.Update(existingCity);
+        await _dbContext.SaveChangesAsync();
+
+        // Create a new CityUpdated message
+        var message = new CityDeleted
+        {
+            CorrelationId = Guid.NewGuid(),
+            CityDelete = cityDelete
+        };
+
+        // Publish the message
+        await _publishEndpoint.Publish(message);
+
+        // Return the updated city
+        return Ok(existingCity);
+    }//func
+
+}//class
 
