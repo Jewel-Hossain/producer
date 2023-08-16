@@ -67,7 +67,15 @@ public class AddCityStateMachine : MassTransitStateMachine<AddCitySaga>
                     {
                         _dbContext.Remove(city);
                         await _dbContext.SaveChangesAsync();
-                    }
+
+                        // Publish a CityDeleteFailedNotification event
+                        await context.Publish(new CityAddFailedNotification
+                        {
+                            CorrelationId = context.Saga.CorrelationId,
+                            City = city
+                        });
+
+                    }//if
                 })
                 .Finalize()
         );

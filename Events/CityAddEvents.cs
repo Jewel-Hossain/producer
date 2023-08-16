@@ -26,3 +26,9 @@ public class CityInsertionFailed : CorrelatedBy<Guid>
     public Guid CorrelationId { get; set; }
     public Guid CityId { get; set; }
 }
+
+public class CityAddFailedNotification : CorrelatedBy<Guid>
+{
+    public Guid CorrelationId { get; set; }
+    public City City { get; set; }
+}
